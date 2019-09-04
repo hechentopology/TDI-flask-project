@@ -7,7 +7,7 @@ from bokeh.models import ColumnDataSource, CustomJS, HoverTool
 from bokeh.models.widgets import Slider
 from bokeh.transform import dodge , jitter, factor_cmap
 from bokeh.models.markers import Asterisk,DiamondCross
-
+import quandl
 import pandas as pd 
 
 
@@ -15,13 +15,16 @@ app = Flask(__name__)
 
 @app.route('/')
 def index(): 
+  month_data = quandl.get("WIKI/AAPL", start_date="2005-12-01", end_date="2005-12-31")
 
-  p1 = figure(plot_width=250, plot_height=250,min_border=0)
-  r1 = p1.circle([1,2,3],[4,5,6],size=20)
- 
+  x = month_data.index
+  y = month_data['Close']
 
-  show(p1)
-  script, div = components(p1)
+  p = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600, background_fill_color = '#efefef')
+  r = p.line(x,y, color = '#8888cc',line_width=1.5,alpha= 0.8)
+  
+  show(p)
+  script, div = components(p)
 
   return render_template('index.html',script=script, div=div)
 
