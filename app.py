@@ -23,7 +23,7 @@ def index():
   show(p1)
   script, div = components(p1)
 
-  return render_template('index.html',{'script': script, 'div': div})
+  return render_template('index.html',script=script, div=div)
 
 @app.route('/about')
 def about():
