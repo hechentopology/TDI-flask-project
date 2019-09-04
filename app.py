@@ -32,8 +32,8 @@ def index():
 
   def update(ticker = 'AAPL'): 
     month_data = quandl.get(("WIKI/"+ticker), start_date="2005-12-01", end_date="2005-12-31")
+    r.data_source.data['x'] = month_data.index
     r.data_source.data['y'] = month_data['Close']
-    push_notebook()  
 
   interact(update,ticker) 
 
