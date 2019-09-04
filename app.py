@@ -17,8 +17,7 @@ app = Flask(__name__)
 @app.route('/')
 def index(): 
 
-
-
+  quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6"
   month_data = quandl.get("WIKI/AAPL", start_date="2005-12-01", end_date="2005-12-31")
 
   x = month_data.index
