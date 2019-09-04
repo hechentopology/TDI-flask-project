@@ -7,6 +7,7 @@ from bokeh.models import ColumnDataSource, CustomJS, HoverTool
 from bokeh.models.widgets import Slider, TextInput
 from bokeh.transform import dodge , jitter, factor_cmap
 from bokeh.models.markers import Asterisk,DiamondCross 
+from ipywidgets import interact
 import quandl
 import pandas as pd 
 
@@ -38,7 +39,7 @@ def index():
   interact(update,ticker) 
 
   p = row(p1,ticker)
-  
+
   show(p)
 
   script, div = components(p)
