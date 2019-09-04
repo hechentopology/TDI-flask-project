@@ -14,13 +14,13 @@ import pandas as pd
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-  opts = dict(plot_width=250, plot_height=250,min_border=0)
-  p1 = figure(**opts)
+def index(): 
+
+  p1 = figure(plot_width=250, plot_height=250,min_border=0)
   r1 = p1.circle([1,2,3],[4,5,6],size=20)
  
 
-  show(p1, notebook_handle = True)
+  show(p1)
   script, div = components(p1)
 
   return render_template('index.html',{'script': script, 'div': div})
