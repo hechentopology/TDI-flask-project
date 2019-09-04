@@ -21,7 +21,7 @@ def index():
  
 
   show(p1, notebook_handle = True)
-  script, div = components(p)
+  script, div = components(p1)
 
   return render_template('index.html',{'script': script, 'div': div})
 
