@@ -21,6 +21,7 @@ def index():
 
   x = month_data.index
   y = month_data['Close']
+  source = ColumnDataSource(data=dict(x=x, y=y))
 
   p1 = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
   r = p1.line(x="x", y="y", source=source, color = '#8888cc',line_width=1.5,alpha= 0.8)
@@ -41,8 +42,7 @@ def index():
   p = row(p1,ticker)
   update()  # initial load of the data
 
-  curdoc().add_root(l)
-  curdoc().title = "Movies"
+  curdoc().add_root(p) 
 
   show(p)
 
