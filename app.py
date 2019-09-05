@@ -42,7 +42,7 @@ def index():
   p = row(p1,ticker)
   update()  # initial load of the data
 
-  curdoc().add_root(p) 
+  #curdoc().add_root(p) 
 
   show(p)
 
