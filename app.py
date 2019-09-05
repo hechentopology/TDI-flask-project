@@ -6,8 +6,7 @@ from bokeh.layouts import row, column,WidgetBox
 from bokeh.models import ColumnDataSource, CustomJS, HoverTool
 from bokeh.models.widgets import Slider, TextInput
 from bokeh.transform import dodge , jitter, factor_cmap
-from bokeh.models.markers import Asterisk,DiamondCross 
-from ipywidgets import interact
+from bokeh.models.markers import Asterisk,DiamondCross  
 import quandl
 import pandas as pd 
 
@@ -24,20 +23,26 @@ def index():
   y = month_data['Close']
 
   p1 = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
-  r = p1.line(x,y, color = '#8888cc',line_width=1.5,alpha= 0.8)
+  r = p1.line(x="x", y="y", source=source, color = '#8888cc',line_width=1.5,alpha= 0.8)
  
-  ticker = TextInput(value="default", title="Label:")
+  ticker = TextInput(value="AAPL", title="Stock:")
 
-  #show(ticker)
+  show(ticker)
 
-  def update(ticker = 'AAPL'): 
-    month_data = quandl.get(("WIKI/"+ticker), start_date="2005-12-01", end_date="2005-12-31")
-    r.data_source.data['x'] = month_data.index
-    r.data_source.data['y'] = month_data['Close']
+  def update():
+    month_data = quandl.get(("WIKI/"+ticker.value.strip()), start_date="2005-12-01", end_date="2005-12-31") 
+    source.data = dict(
+        x=month_data.index,
+        y=month_data['Close'], 
+    )
 
-  interact(update,ticker) 
-
+  ticker.on_change('value', lambda attr, old, new: update())
+  
   p = row(p1,ticker)
+  update()  # initial load of the data
+
+  curdoc().add_root(l)
+  curdoc().title = "Movies"
 
   show(p)
 
