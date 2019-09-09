@@ -28,8 +28,6 @@ def index():
  
   ticker = TextInput(value="AAPL", title="Stock:")
 
-  show(ticker)
-
   def update():
     month_data = quandl.get(("WIKI/"+ticker.value.strip()), start_date="2005-12-01", end_date="2005-12-31") 
     source.data = dict(
