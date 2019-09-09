@@ -54,7 +54,7 @@ def bk_worker():
     server = Server({'/bkapp': modify_doc}, io_loop=IOLoop(), allow_websocket_origin=["localhost:5006"])
     server.start()
     server.io_loop.start()
-
+ 
 from threading import Thread
 Thread(target=bk_worker).start()
 
