@@ -34,15 +34,16 @@ def index():
         x=month_data.index,
         y=month_data['Close'], 
     )
+    show(p)
 
   ticker.on_change('value', lambda attr, old, new: update())
   
-  p = row(p1,ticker)
+  p = column(p1,ticker)
   update()  # initial load of the data
 
   #curdoc().add_root(p) 
 
-  show(p)
+  
 
   script, div = components(p)
 
