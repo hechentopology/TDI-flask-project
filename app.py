@@ -20,7 +20,7 @@ app = Flask(__name__)
 quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
 
 def modify_doc(doc):
-  month_data = quandl.get(("WIKI/"+ticker_name.strip()), start_date="2005-12-01", end_date="2005-12-31") 
+  month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
   x = month_data.index
   y = month_data['Close']
   source = ColumnDataSource(data=dict(x=x, y=y))
@@ -33,7 +33,6 @@ def modify_doc(doc):
       month_data = quandl.get(("WIKI/"+ new.strip()), start_date="2005-12-01", end_date="2005-12-31") 
       x = month_data.index
       y = month_data['Close']
-
       source.data = ColumnDataSource(data=dict(x=x, y=y)).data
 
   slider = TextInput(value="AAPL", title="Stock:")
