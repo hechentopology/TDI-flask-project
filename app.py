@@ -37,8 +37,9 @@ def modify_doc(doc):
 
   slider = TextInput(value="AAPL", title="Stock:")
   slider.on_change('value', callback)
-
-  doc.add_root(column(slider, p1))
+  p = column(slider, p1)
+  show(p)
+  doc.add_root(p)
  
 @app.route('/', methods=['GET'])
 
