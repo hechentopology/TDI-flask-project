@@ -20,49 +20,32 @@ app = Flask(__name__)
 quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
 #DEFAULT_TICKERS = ['AAPL', 'GOOG', 'INTC', 'BRCM', 'YHOO']
 
-def modify_doc(doc):
-  month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
-  x = month_data.index
-  y = month_data['Close']
-  source = ColumnDataSource(data=dict(x=x, y=y))
-
-  p1 = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
-  r = p1.line(x="x", y="y", source=source, color = '#8888cc',line_width=1.5,alpha= 0.8)
-
-  def callback(attr, old, new):
-
-      month_data = quandl.get(("WIKI/"+ new.strip()), start_date="2005-12-01", end_date="2005-12-31") 
-      x = month_data.index
-      y = month_data['Close']
-      source.data = ColumnDataSource(data=dict(x=x, y=y)).data
-
-  slider = TextInput(value="AAPL", title="Stock:")
-  slider.on_change('value', callback)
-  p = column(slider, p1)
-  
-  doc.add_root(p)
- 
 @app.route('/', methods=['GET'])
 
-def bkapp_page():
-    script = server_document('http://localhost:5006/bkapp')
-    return render_template("index.html", script=script, template="Flask")
 
+month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
+x = month_data.index
+y = month_data['Close']
+source = ColumnDataSource(data=dict(x=x, y=y))
 
-def bk_worker():
-    # Can't pass num_procs > 1 in this configuration. If you need to run multiple
-    # processes, see e.g. flask_gunicorn_embed.py
-    server = Server({'/bkapp': modify_doc}, io_loop=IOLoop(), allow_websocket_origin=["localhost:5006","127.0.0.1:33507","flask-stocks-demo.herokuapp.com"])
-    server.start()
-    server.io_loop.start()
- 
-from threading import Thread
-Thread(target=bk_worker).start()
+p1 = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
+r = p1.line(x="x", y="y", source=source, color = '#8888cc',line_width=1.5,alpha= 0.8)
 
+def callback(attr, old, new):
 
-@app.route('/about')
-def about():
-  return render_template('about.html')
+    month_data = quandl.get(("WIKI/"+ new.strip()), start_date="2005-12-01", end_date="2005-12-31") 
+    x = month_data.index
+    y = month_data['Close']
+    source.data = ColumnDataSource(data=dict(x=x, y=y)).data
+
+slider = TextInput(value="AAPL", title="Stock:")
+slider.on_change('value', callback)
+p = column(slider, p1)
+
+curdoc().add_root(p)
+
+#  return render_template("index.html", script=script, template="Flask")
+
 
 if __name__ == '__main__':
   app.run(port=33507)

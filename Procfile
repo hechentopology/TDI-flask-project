@@ -1,2 +1,1 @@
-web: bokeh serve --port=$PORT --allow-websocket-origin=flask-stocks-demo.herokuapp.com --address=0.0.0.0 --use-xheaders app.py
-web: gunicorn app:app
+web: bokeh serve --port=$PORT --num-procs=0 --host=flask-stocks-demo.herokuapp.com --address=0.0.0.0 --use-xheaders app.py
