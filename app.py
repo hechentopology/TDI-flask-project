@@ -18,6 +18,7 @@ app = Flask(__name__)
 
 
 quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
+#DEFAULT_TICKERS = ['AAPL', 'GOOG', 'INTC', 'BRCM', 'YHOO']
 
 def modify_doc(doc):
   month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
@@ -38,7 +39,7 @@ def modify_doc(doc):
   slider = TextInput(value="AAPL", title="Stock:")
   slider.on_change('value', callback)
   p = column(slider, p1)
-  show(p)
+  
   doc.add_root(p)
  
 @app.route('/', methods=['GET'])
@@ -51,7 +52,7 @@ def bkapp_page():
 def bk_worker():
     # Can't pass num_procs > 1 in this configuration. If you need to run multiple
     # processes, see e.g. flask_gunicorn_embed.py
-    server = Server({'/bkapp': modify_doc}, io_loop=IOLoop(), allow_websocket_origin=["localhost:5006"])
+    server = Server({'/bkapp': modify_doc}, io_loop=IOLoop(), allow_websocket_origin=["localhost:5006","127.0.0.1:33507"])
     server.start()
     server.io_loop.start()
  
@@ -65,6 +66,5 @@ def about():
 
 if __name__ == '__main__':
   app.run(port=33507)
-
 
 
