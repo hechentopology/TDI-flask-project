@@ -16,11 +16,10 @@ import pandas as pd
 
 app = Flask(__name__)
 
+# @app.route('/', methods=['GET'])
 
 quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
 #DEFAULT_TICKERS = ['AAPL', 'GOOG', 'INTC', 'BRCM', 'YHOO']
-
-@app.route('/', methods=['GET'])
 
 
 month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
