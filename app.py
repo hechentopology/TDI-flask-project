@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect
 from bokeh.plotting import figure, output_file, show, curdoc
-from bokeh.embed import server_document
+from bokeh.embed import server_document, components
 from bokeh.core.properties import value 
 from bokeh.layouts import row, column,WidgetBox
 from bokeh.models import ColumnDataSource, CustomJS, HoverTool
