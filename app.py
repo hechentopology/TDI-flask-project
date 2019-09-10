@@ -9,44 +9,46 @@ from bokeh.transform import dodge , jitter, factor_cmap
 from bokeh.models.markers import Asterisk,DiamondCross  
 from bokeh.server.server import Server
 from tornado.ioloop import IOLoop
-
-import quandl
-import pandas as pd 
-
+ 
+import numpy as np 
+import requests
+import pandas as pd
+from datetime import datetime
 
 app = Flask(__name__)
 
-# @app.route('/', methods=['GET'])
+@app.route('/')
+def main():
+    return redirect('/prices') 
 
-quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
-#DEFAULT_TICKERS = ['AAPL', 'GOOG', 'INTC', 'BRCM', 'YHOO']
+@app.route('/prices', methods=['POST'])
+def prices():
+    tsymbol1 = request.form['tsymbol']
+    r = requests.get('https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+tsymbol1+'&qopts.columns=date,low,close,open,high&api_key=Y2Zioiyb9r16QRthEeyU')
+    json_object = r.json()
+    datalist = json_object['datatable']['data'] 
+    df = pd.DataFrame(datalist)
+    datess = df[df.columns[0]].tolist()
+    closeprices = df[df.columns[2]].tolist()
+
+    # output to static HTML file
+    output_file("lines.html")
+
+    # create a new plot with a title and axis labels
+    plot = figure(x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price', toolbar_location="above",
+           toolbar_sticky=False)
+
+    def datetime(x):
+        return np.array(x, dtype=np.datetime64)
+
+    # add a line renderer with legend and line thickness
+    plot.line(datetime(datess), closeprices, legend="Closing Price", color = "#D3790A", line_width=2)
 
 
-month_data = quandl.get(("WIKI/"+'AAPL'), start_date="2005-12-01", end_date="2005-12-31") 
-x = month_data.index
-y = month_data['Close']
-source = ColumnDataSource(data=dict(x=x, y=y))
-
-p1 = figure(title='one month stock AAPL',plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
-r = p1.line(x="x", y="y", source=source, color = '#8888cc',line_width=1.5,alpha= 0.8)
-
-def callback(attr, old, new):
-
-    month_data = quandl.get(("WIKI/"+ new.strip()), start_date="2005-12-01", end_date="2005-12-31") 
-    x = month_data.index
-    y = month_data['Close']
-    source.data = ColumnDataSource(data=dict(x=x, y=y)).data
-
-slider = TextInput(value="AAPL", title="Stock:")
-slider.on_change('value', callback)
-p = column(slider, p1)
-
-curdoc().add_root(p)
-
-#  return render_template("index.html", script=script, template="Flask")
+    script, div = components(plot)
+    return render_template('graph.html', script=script, div=div, ticker = tsymbol1)
+    # show the results
 
 
 if __name__ == '__main__':
-  app.run(port=33507)
-
-
+    app.run(port=33507)
