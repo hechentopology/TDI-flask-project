@@ -11,7 +11,6 @@ from bokeh.server.server import Server
 from tornado.ioloop import IOLoop
  
 import numpy as np 
-import requests
 import pandas as pd
 from datetime import datetime
 
@@ -28,28 +27,18 @@ def index():
 @app.route('/prices', methods=['POST'])
 def prices():
     tsymbol1 = request.form['tsymbol']
-    r = requests.get('https://www.quandl.com/api/v3/datatables/WIKI/PRICES.json?ticker='+tsymbol1+'&qopts.columns=date,low,close,open,high&api_key=Y2Zioiyb9r16QRthEeyU')
-    json_object = r.json()
-    datalist = json_object['datatable']['data'] 
-    df = pd.DataFrame(datalist)
-    datess = df[df.columns[0]].tolist()
-    closeprices = df[df.columns[2]].tolist()
+    month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2005-12-01", end_date="2005-12-31") 
+    x = month_data.index
+    y = month_data['Close']
 
     # output to static HTML file
     output_file("lines.html")
 
     # create a new plot with a title and axis labels
-    plot = figure(x_axis_label='Date', x_axis_type='np.datetime64', y_axis_label='Price', toolbar_location="above",
-           toolbar_sticky=False)
+    p1 = figure(title=('One month stock closing price: '+tsymbol1.strip()),plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
+    r = p1.line(x, y, color = '#8888cc',line_width=2,alpha= 0.8)
 
-    def datetime(x):
-        return np.array(x, dtype= np.datetime64)
-
-    # add a line renderer with legend and line thickness
-    plot.line(datetime(datess), closeprices, legend="Closing Price", color = "#D3790A", line_width=2)
-
-
-    script, div = components(plot)
+    script, div = components(p1)
     return render_template('graph.html', script=script, div=div, ticker = tsymbol1)
     # show the results
 
