@@ -20,11 +20,11 @@ quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6"
 
 @app.route('/')
 def main():
-    return redirect('/prices')
+    return redirect('/index')
 
 @app.route('/index')
 def index():
-    tsymbol1 = request.form['tsymbol']
+    tsymbol1 = 'AAPL'
     month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2015-12-01", end_date="2015-12-31") 
     x = pd.to_datetime(month_data.index)
     y = month_data['Close']
