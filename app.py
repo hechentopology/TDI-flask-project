@@ -2,13 +2,9 @@ from flask import Flask, render_template, request, redirect
 from bokeh.plotting import figure, output_file, show, curdoc
 from bokeh.embed import server_document, components
 from bokeh.core.properties import value 
-from bokeh.layouts import row, column,WidgetBox
+from bokeh.layouts import row, column
 from bokeh.models import ColumnDataSource, CustomJS, HoverTool, DatetimeTickFormatter, Range1d
-from bokeh.models.widgets import Slider, TextInput
-from bokeh.transform import dodge , jitter, factor_cmap
-from bokeh.models.markers import Asterisk,DiamondCross  
-from bokeh.server.server import Server
-from tornado.ioloop import IOLoop
+
 import quandl
 import numpy as np 
 import pandas as pd
@@ -30,7 +26,7 @@ def index():
     y = month_data['Close']
 
     # output to static HTML file
-    output_file("lines.html")
+    #output_file("lines.html")
 
     # create a new plot with a title and axis labels
     start_date=datetime(2015,12,1,0,0)
@@ -66,7 +62,6 @@ def prices():
     script, div = components(p1)
     return render_template('index.html', script=script, div=div, ticker = tsymbol1)
     # show the results
-
 
 if __name__ == '__main__':
     app.run(port=33507)

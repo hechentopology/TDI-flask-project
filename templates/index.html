@@ -8,23 +8,69 @@
 		<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.css" type="text/css" />
 		<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-1.3.4.min.js"></script>
 		{{ script | safe }}
-	</head>
-	<body>
+
+
+<style type="text/css">
+    .jumbotron {
+        background: #e8e7e3;
+        color: black;
+        padding-bottom: 80px
+    }
+    .jumbotron .btn-primary {
+        background: #73c2d0;
+        border-color: #73c2d0
+    }
+    .jumbotron .btn-primary:hover {
+        background: #73c2d0
+    }
+    .jumbotron p {
+        color: black;
+        max-width: 80%;
+        margin: 1em auto 2em
+    }
+    .navbar+.jumbotron {
+        margin-top: -20px
+    }
+    .jumbotron .lang-logo {
+        display: block;
+        background: #b01302;
+        border-radius: 30%;
+        overflow: hidden;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        border: 2px solid white
+    }
+    .jumbotron .lang-logo img {
+        max-width: 100%
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+<div class="jumbotron text-center hoverable p-4">
 	<center>
 		<form method="POST" action="/prices">
-			<h1><b>Plotting Interface for Closing Prices of Stock Ticker Testing</b></h1>
+			<h1 class="h1 mb-1"><strong> Stock Closing Prices </strong> </h1>
 			<h3>Please enter a stock ticker in the box below (eg. AAPL).</h3>
 			Ticker Symbol: <input type ="text" name="tsymbol" value="AAPL">
 		<input type="submit">
 
         <div>
-			<h1><b>Closing Prices of {{ ticker }} from Quandle WIKI set</b></h1>
+			<h3 class="h3 mb-3"><strong>Closing Prices of {{ ticker }} from </strong> </h3>
 
             {{ div | safe }} 
+            <h4 class="h4 mb-4">Data source: Quandle WIKI set</h4>
         </div>
 	</center>
 
+</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
 	</body>
 </html>
