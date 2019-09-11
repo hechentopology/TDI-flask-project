@@ -12,7 +12,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
+quandl.ApiConfig.api_key = "you_private_api_key" 
 
 @app.route('/')
 def main():
@@ -43,6 +43,7 @@ def index():
 
     p1.background_fill_color = "beige"
     p1.background_fill_alpha = 0
+    p1.border_fill_color = None
 
     script, div = components(p1)
     return render_template('index.html', script=script, div=div, ticker = user_ticker)
