@@ -30,7 +30,7 @@ def index():
 def prices():
     tsymbol1 = request.form['tsymbol']
     month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2005-12-01", end_date="2005-12-31") 
-    x = month_data.index
+    x = pd.to_datetime(month_data.index)
     y = month_data['Close']
 
     # output to static HTML file
