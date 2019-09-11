@@ -39,14 +39,14 @@ def prices():
     output_file("lines.html")
 
     # create a new plot with a title and axis labels
-    plot = figure(x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price', toolbar_location="above",
+    plot = figure(x_axis_label='Date', x_axis_type='np.datetime64', y_axis_label='Price', toolbar_location="above",
            toolbar_sticky=False)
 
     def datetime(x):
-        return np.array(x, dtype=np.datetime64)
+        return np.array(x, dtype= np.datetime64)
 
     # add a line renderer with legend and line thickness
-    plot.line(datetime(datess), closeprices.astype(float), legend="Closing Price", color = "#D3790A", line_width=2)
+    plot.line(datetime(datess), closeprices, legend="Closing Price", color = "#D3790A", line_width=2)
 
 
     script, div = components(plot)
