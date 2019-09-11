@@ -3,7 +3,7 @@ from bokeh.plotting import figure, output_file, show, curdoc
 from bokeh.embed import server_document, components
 from bokeh.core.properties import value 
 from bokeh.layouts import row, column,WidgetBox
-from bokeh.models import ColumnDataSource, CustomJS, HoverTool
+from bokeh.models import ColumnDataSource, CustomJS, HoverTool, DatetimeTickFormatter, Range1d
 from bokeh.models.widgets import Slider, TextInput
 from bokeh.transform import dodge , jitter, factor_cmap
 from bokeh.models.markers import Asterisk,DiamondCross  
@@ -37,9 +37,13 @@ def prices():
     output_file("lines.html")
 
     # create a new plot with a title and axis labels
-    p1 = figure(title=('One month stock closing price: '+tsymbol1.strip()),plot_height = 300, plot_width = 600) # , background_fill_color = '#efefef'
+    start_date=datetime(2005,12,1)
+    end_date=datetime(2005,12,31)
+    p1 = figure(title=('One month stock closing price: AAPL'),plot_height = 300, plot_width = 600,
+           x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price',
+           x_range=Range1d(start=start_date, end=end_date))
     r = p1.line(x, y, color = '#8888cc',line_width=2,alpha= 0.8)
-
+    
     script, div = components(p1)
     return render_template('graph.html', script=script, div=div, ticker = tsymbol1)
     # show the results
