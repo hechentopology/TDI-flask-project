@@ -21,14 +21,14 @@ def main():
 @app.route('/index')
 def index():
     user_ticker = 'AAPL'
-    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2015-12-01", end_date="2015-12-31") 
+    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2019-01-01", end_date="2019-08-31") 
     x = pd.to_datetime(month_data.index)
     y = month_data['Close']
     source = ColumnDataSource(data={
         'x' : x,
         'y' : y})
-    start_date=datetime(2019,8,1,0,0)
-    end_date=datetime(2019,8,31,0,0)
+    start_date=datetime(2019,1,1,0,0)
+    end_date=datetime(2019,1,31,0,0)
     p1 = figure(title=('One month stock closing price:'+ user_ticker.strip()),plot_height = 300, plot_width = 600,
            x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price',
            x_range = Range1d(start=start_date, end=end_date),
@@ -50,14 +50,14 @@ def index():
 @app.route('/getprice', methods=['POST'])
 def prices():
     user_ticker = request.form['user_ticker']
-    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2015-12-01", end_date="2015-12-31") 
+    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2019-01-01", end_date="2019-08-31") 
     x = pd.to_datetime(month_data.index)
     y = month_data['Close']
     source = ColumnDataSource(data={
         'x' : x,
         'y' : y})
-    start_date=datetime(2019,8,1,0,0)
-    end_date=datetime(2019,8,31,0,0)
+    start_date=datetime(2019,1,1,0,0)
+    end_date=datetime(2019,1,31,0,0)
     p1 = figure(title=('One month stock closing price:'+ user_ticker.strip()),plot_height = 300, plot_width = 600,
            x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price',
            x_range = Range1d(start=start_date, end=end_date),
@@ -72,6 +72,7 @@ def prices():
 
     p1.background_fill_color = "beige"
     p1.background_fill_alpha = 0
+    p1.border_fill_color = None
 
     script, div = components(p1)
     return render_template('index.html', script=script, div=div, ticker = user_ticker)
