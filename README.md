@@ -6,7 +6,8 @@ The finished product is https://flask-stocks-demo.herokuapp.com.
 
 ## Uses the quandl API to pull stocks data
 - use the `quandl.get` method to preselect stock of interest and filter by dates.
- 
+- api key has been hidden in the app.py file. to run, enter your own api key to access quandl dataset. 
+
 ## Uses Bokeh to visualize pandas data
 - use the `pd.to_datetime` method to generate datetime data for the x-axis.
 - use `Range1d` to initialize the Bokeh figure, which seems required by Bokeh js.
