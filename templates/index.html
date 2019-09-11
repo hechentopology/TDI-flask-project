@@ -52,13 +52,13 @@
 	<div class="jumbotron text-center hoverable p-4">
 		<center>
 			<form method="POST" action="/getprice">
-				<h1 class="h1 mb-1"><strong> Stock Closing Prices </strong> </h1>
+				<h1 class="h1 mb-1"><strong> Stock Closing Prices Demo </strong> </h1>
 				<h3>Please enter a stock ticker in the box below (eg. AAPL).</h3>
 				Stock Symbol: <input type ="text" name="user_ticker" value="AAPL">
 			<input type="submit">
 
 	        <div>
-				<h3 class="h3 mb-3"><strong>Closing Prices of {{ ticker }} from 08/01/2019 to 08/31/2019.</strong> </h3>
+				<h3 class="h3 mb-3"><strong>Closing Prices of {{ ticker }} from 12/01/2015 to 12/31/2015.</strong> </h3>
 
 	            {{ div | safe }} 
 	            <h4 class="h4 mb-4">Data source: Quandle WIKI dataset</h4>
