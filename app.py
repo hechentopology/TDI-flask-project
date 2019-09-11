@@ -20,13 +20,13 @@ quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6"
 
 @app.route('/')
 def main():
-    return redirect('/index')
+    return redirect('/prices')
 
 #@app.route('/index')
 #def index():
 
 
-@app.route('/index', methods=['POST'])
+@app.route('/prices', methods=['POST'])
 def prices():
     tsymbol1 = request.form['tsymbol']
     month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2015-12-01", end_date="2015-12-31") 
