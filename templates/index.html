@@ -45,32 +45,30 @@
         max-width: 100%
     }
 
-
-  </style>
+</style>
 </head>
 
 <body>
+	<div class="jumbotron text-center hoverable p-4">
+		<center>
+			<form method="POST" action="/getprice">
+				<h1 class="h1 mb-1"><strong> Stock Closing Prices </strong> </h1>
+				<h3>Please enter a stock ticker in the box below (eg. AAPL).</h3>
+				Stock Symbol: <input type ="text" name="user_ticker" value="AAPL">
+			<input type="submit">
 
-<div class="jumbotron text-center hoverable p-4">
-	<center>
-		<form method="POST" action="/prices">
-			<h1 class="h1 mb-1"><strong> Stock Closing Prices </strong> </h1>
-			<h3>Please enter a stock ticker in the box below (eg. AAPL).</h3>
-			Ticker Symbol: <input type ="text" name="tsymbol" value="AAPL">
-		<input type="submit">
+	        <div>
+				<h3 class="h3 mb-3"><strong>Closing Prices of {{ ticker }} from 08/01/2019 to 08/31/2019.</strong> </h3>
 
-        <div>
-			<h3 class="h3 mb-3"><strong>Closing Prices of {{ ticker }} from </strong> </h3>
+	            {{ div | safe }} 
+	            <h4 class="h4 mb-4">Data source: Quandle WIKI dataset</h4>
+	        </div>
+		</center>
 
-            {{ div | safe }} 
-            <h4 class="h4 mb-4">Data source: Quandle WIKI set</h4>
-        </div>
-	</center>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-</div>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</div>
 
-
-	</body>
+</body>
 </html>

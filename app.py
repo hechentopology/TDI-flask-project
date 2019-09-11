@@ -20,48 +20,62 @@ def main():
 
 @app.route('/index')
 def index():
-    tsymbol1 = 'AAPL'
-    month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2015-12-01", end_date="2015-12-31") 
+    user_ticker = 'AAPL'
+    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2015-12-01", end_date="2015-12-31") 
     x = pd.to_datetime(month_data.index)
     y = month_data['Close']
-
-    # output to static HTML file
-    #output_file("lines.html")
-
-    # create a new plot with a title and axis labels
-    start_date=datetime(2015,12,1,0,0)
-    end_date=datetime(2015,12,31,0,0)
-    p1 = figure(title=('One month stock closing price:'+ tsymbol1.strip()),plot_height = 300, plot_width = 600,
+    source = ColumnDataSource(data={
+        'x' : x,
+        'y' : y})
+    start_date=datetime(2019,8,1,0,0)
+    end_date=datetime(2019,8,31,0,0)
+    p1 = figure(title=('One month stock closing price:'+ user_ticker.strip()),plot_height = 300, plot_width = 600,
            x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price',
            x_range = Range1d(start=start_date, end=end_date),
            y_range = Range1d(y.min()-1,y.max()+1))
-    r = p1.line(x, y, color = '#8888cc',line_width=2,alpha= 0.8)
+    r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
+
+    hover = HoverTool(tooltips=[('Date', '@x'), 
+                                ('Closing Price', '@y')],
+                          mode='vline')
+
+    p1.add_tools(hover)
+
+    p1.background_fill_color = "beige"
+    p1.background_fill_alpha = 0
 
     script, div = components(p1)
-    return render_template('index.html', script=script, div=div, ticker = tsymbol1)
+    return render_template('index.html', script=script, div=div, ticker = user_ticker)
 
-@app.route('/prices', methods=['POST'])
+@app.route('/getprice', methods=['POST'])
 def prices():
-    tsymbol1 = request.form['tsymbol']
-    month_data = quandl.get(("WIKI/"+ tsymbol1.strip()), start_date="2015-12-01", end_date="2015-12-31") 
+    user_ticker = request.form['user_ticker']
+    month_data = quandl.get(("WIKI/"+ user_ticker.strip()), start_date="2015-12-01", end_date="2015-12-31") 
     x = pd.to_datetime(month_data.index)
     y = month_data['Close']
-
-    # output to static HTML file
-    output_file("lines.html")
-
-    # create a new plot with a title and axis labels
-    start_date=datetime(2015,12,1,0,0)
-    end_date=datetime(2015,12,31,0,0)
-    p1 = figure(title=('One month stock closing price:'+ tsymbol1.strip()),plot_height = 300, plot_width = 600,
+    source = ColumnDataSource(data={
+        'x' : x,
+        'y' : y})
+    start_date=datetime(2019,8,1,0,0)
+    end_date=datetime(2019,8,31,0,0)
+    p1 = figure(title=('One month stock closing price:'+ user_ticker.strip()),plot_height = 300, plot_width = 600,
            x_axis_label='Date', x_axis_type='datetime', y_axis_label='Price',
            x_range = Range1d(start=start_date, end=end_date),
            y_range = Range1d(y.min()-1,y.max()+1))
-    r = p1.line(x, y, color = '#8888cc',line_width=2,alpha= 0.8)
+    r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
+
+    hover = HoverTool(tooltips=[('Date', '@x'), 
+                                ('Closing Price', '@y')],
+                          mode='vline')
+
+    p1.add_tools(hover)
+
+    p1.background_fill_color = "beige"
+    p1.background_fill_alpha = 0
 
     script, div = components(p1)
-    return render_template('index.html', script=script, div=div, ticker = tsymbol1)
-    # show the results
+    return render_template('index.html', script=script, div=div, ticker = user_ticker)
+
 
 if __name__ == '__main__':
     app.run(port=33507)
