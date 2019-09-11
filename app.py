@@ -9,12 +9,14 @@ from bokeh.transform import dodge , jitter, factor_cmap
 from bokeh.models.markers import Asterisk,DiamondCross  
 from bokeh.server.server import Server
 from tornado.ioloop import IOLoop
- 
+import quandl
 import numpy as np 
 import pandas as pd
 from datetime import datetime
 
 app = Flask(__name__)
+
+quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
 
 @app.route('/')
 def main():
