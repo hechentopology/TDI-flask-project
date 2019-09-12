@@ -12,7 +12,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" # you_private_api_key
+quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
 
 @app.route('/')
 def main():
@@ -35,10 +35,7 @@ def index():
            y_range = Range1d(y.min()-1,y.max()+1))
     r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
 
-    hover = HoverTool(tooltips=[('Date', '@x{date}'), 
-                                ('Closing Price', '@y{0.00}')],
-                    formatters={'Date': 'datetime',
-                                'Closing Price' : 'printf', },
+    hover = HoverTool(tooltips=[('Closing', '@y')],
                           mode='vline')
 
     p1.add_tools(hover)
@@ -67,10 +64,7 @@ def prices():
            y_range = Range1d(y.min()-1,y.max()+1))
     r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
 
-    hover = HoverTool(tooltips=[('Date', '@x{date}'), 
-                                ('Closing Price', '@y{0.00}')],
-                    formatters={'Date': 'datetime',
-                                'Closing Price' : 'printf', },
+    hover = HoverTool(tooltips=[('Closing', '@y')],
                           mode='vline')
     p1.add_tools(hover)
 
