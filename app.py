@@ -12,7 +12,7 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-quandl.ApiConfig.api_key = "XHUMj4gG2AGsnwtxWkx6" 
+quandl.ApiConfig.api_key = "your_private_key" 
 
 @app.route('/')
 def main():
