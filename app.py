@@ -35,7 +35,7 @@ def index():
            y_range = Range1d(y.min()-1,y.max()+1))
     r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
 
-    hover = HoverTool(tooltips=[('Date', '@x{%F}'), 
+    hover = HoverTool(tooltips=[('Date', '@x{date}'), 
                                 ('Closing Price', '@y{0.00}')],
                     formatters={'Date': 'datetime',
                                 'Closing Price' : 'printf', },
@@ -67,7 +67,7 @@ def prices():
            y_range = Range1d(y.min()-1,y.max()+1))
     r = p1.line(x='x', y='y', color = '#8888cc',line_width=2, source = source)
 
-    hover = HoverTool(tooltips=[('Date', '@x{%F}'), 
+    hover = HoverTool(tooltips=[('Date', '@x{date}'), 
                                 ('Closing Price', '@y{0.00}')],
                     formatters={'Date': 'datetime',
                                 'Closing Price' : 'printf', },
